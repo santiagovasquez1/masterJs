@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <style>
+        .box {
+            width: 250px;
+            float: left;
+            margin: 20px;
+        }
+        
+        .dashed {
+            border: 3px dashed black;
+            height: 250px;
+            padding: 5px;
+        }
+    </style>
+    <script src="scripts/29-EjercicioDom.js"></script>
+</head>
+
+<body>
+    <!--1.Crear formulario con los campos:Nombre, apellidos y edad
+        2.Boton de enviar el formulario: evento submit
+        3.Mostrar datos por pantalla del form
+        4.Tener un boton que al darle click nos muestre los datos actuales del form, pero fuera del form
+        5.Validacion del formulario
+    -->
+
+    <h1>Ejercicio DOM, Eventos y funciones Curso Js</h1>
+    <div class="box">
+        <form action="#" method="POST" id="formulario" onsubmit="return false">
+            <p>
+                <label for="Nombre">Nombre: </label>
+                <input type="text" name="Nombre" id="campoNombre" placeholder="Ingresa tu nombre">
+                <span id="errorNombre" style="color: red;"></span>
+            </p>
+            <p>
+                <label for="Apellido">Apellido: </label>
+                <input type="text" name="Apellido" id="campoApellido" placeholder="Ingresa tu apellido">
+                <span id="errorApellido" style="color: red;"></span>
+            </p>
+            <p>
+                <label for="edad">Edad: </label>
+                <input type="number" name="edad" id="campoEdad" placeholder="Ingresa tu edad: ">
+                <span id="errorEdad" style="color: red;"></span>
+            </p>
+            <input type="submit" id="submit" value="Enviar formulario">
+        </form>
+    </div>
+
+    <div class="box dashed">
+        <h3>Informacion del usuario</h3>
+        <hr>
+    </div>
+</body>
+
+</html>
