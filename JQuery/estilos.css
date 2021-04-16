@@ -1,0 +1,23 @@
+.zebra {
+    border: 2px dashed #ccc;
+    padding: 1px;
+}
+
+.overDiv {
+    background: #ccc;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.grande {
+    font-size: 30px;
+}
+
+.margenSup {
+    display: block;
+    margin-top: 45px;
+}
+
+.resaltado {
+    border-bottom: 2px solid brown;
+}
