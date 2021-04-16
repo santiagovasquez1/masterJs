@@ -2,24 +2,16 @@ $(function() {
     //MouseOver y MouseOut
     var caja = $("#caja").css("cursor", "pointer");
     var parrafoMouseInfo = $("#parrafoMousePos");
+    var datos = $("#datos");
 
-    // function cambiaOver(event) {
-    //     $(this).css('background', '#ccc').css('color', 'black').css("transition", "300ms");
-    //     var mouseX = [event.pageX, event.pageY];
-    //     console.log(mouseX);
-    // }
-
-    // function cambiaOut() {
-    //     $(this).css('background', 'lemonchiffon').css('color', 'black').css("transition", "300ms");
-    // }
-    //Hover, otra manera de manejar mouseout y mouseover
-    // caja.hover(cambiaOver(event), cambiaOut);
 
     caja.on('mouseover', function(event) {
         $(this).css('background', '#ccc').css('color', 'black').css("transition", "300ms");
     });
 
-    caja.on('mousemove', function(event) {
+    $(document).on('mousemove', function(event) {
+        $("#Sigueme").css("left", event.clientX).css("top", event.clientY);
+        // caja.css("left", event.clientX).css("top", event.clientY);
         parrafoMouseInfo.text(`La posicion del mouse: ${event.pageX}X y ${event.pageY}Y`);
     });
 
@@ -37,6 +29,15 @@ $(function() {
     })
 
 
+    //Mouse up y mouse down, eventes que se activan cuando se presiona o se suelta el mouse
+    datos.on('mousedown', function(event) {
+        $(this).css("border-color", "gray");
+    });
+
+    datos.on('mouseup', function(event) {
+        $(this).css("border-color", "black");
+    });
+
     //Focus y blur
     var inputName = $("#nombre");
     inputName.on('focus', function() {
@@ -46,7 +47,9 @@ $(function() {
     inputName.on('blur', function() {
         $(this).css("border", "2px solid transparent");
         let valor = $(this).val();
-        $("#datos").text(valor).show();
+        datos.text(valor).show();
     })
+
+
 
 });

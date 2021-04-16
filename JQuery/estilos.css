@@ -30,6 +30,16 @@
     background: lemonchiffon;
 }
 
+#Sigueme {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    display: block;
+    background: #1bd87a;
+    opacity: 0.3;
+    border-radius: 25px;
+}
+
 input {
     padding: 10px;
     width: 300px;
