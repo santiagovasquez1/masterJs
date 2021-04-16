@@ -1,6 +1,7 @@
 #peliculas {
     background: #ccc;
     width: 250px;
+    height: 500px;
     padding: 5px;
     border: 1px dashed black;
     margin: 5px;
@@ -12,9 +13,9 @@
 }
 
 .caja {
-    width: 500px;
-    height: 250px;
+    height: 500px;
     border: 1px solid black;
     margin: 5px;
+    padding: 5px;
     float: left;
 }
