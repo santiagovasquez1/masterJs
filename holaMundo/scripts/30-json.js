@@ -21,8 +21,11 @@ var peliculas = [{
     pais: "Estados Unidos"
 }]
 
+var divPeliculas = null;
+
 window.addEventListener('load', function() {
-    var divPeliculas = document.getElementById("peliculas");
+
+    divPeliculas = document.getElementById("peliculas");
     var listadoPeliculas = document.createElement("ul");
 
     peliculas.forEach(pelicula => {
@@ -36,5 +39,17 @@ window.addEventListener('load', function() {
         li.append(infoMovie);
         listadoPeliculas.append(li);
     });
+
     divPeliculas.append(listadoPeliculas);
+});
+
+window.addEventListener('resize', result => {
+    var windowWidth = this.innerWidth
+    var divExample = document.getElementById("localStorageInfo");
+
+
+    if (divExample !== null && divPeliculas !== null) {
+        var widht = windowWidth - 350;
+        divExample.style.width = `${widht}px`;
+    }
 });
