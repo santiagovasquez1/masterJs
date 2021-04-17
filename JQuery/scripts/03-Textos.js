@@ -12,7 +12,6 @@ $(function() {
     });
 
     //Motodo para recorrer elementos de html
-
     reloadLink();
 
 });

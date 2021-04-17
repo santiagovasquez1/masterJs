@@ -25,9 +25,14 @@
 #caja {
     padding: 5px;
     width: 250px;
-    height: 250px;
+    height: 300px;
     border: 2px solid black;
     background: lemonchiffon;
+    text-align: center;
+    font-size: 19px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 15px;
+    overflow: scroll;
 }
 
 #Sigueme {
