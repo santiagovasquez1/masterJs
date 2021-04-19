@@ -21,7 +21,7 @@ function reloadLink() {
         var url = ($(this).attr("href"));
         var a = $(this);
         //atr tambien sirve para gregar atributos al elemento htlm
-        a.attr('target', 'blanl');
+        a.attr('target', 'blank');
         a.text(url);
     });
 }

@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
-    <scrip src="scripts/jquery-3.6.0.min.js"></scrip>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="scripts/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
     <script src="scripts/main.js"></script>
     <title>Proyecto Js</title>
 </head>
@@ -30,10 +32,14 @@
                 </ul>
             </nav>
         </header>
-
-
         <!--Slider-->
-        <div id="slider"></div>
+        <div id="slider">
+            <div class="bxslider">
+                <div><img src="images/hojas.jpg" title="Hojas" alt="Hojas"></div>
+                <div><img src="images/rojo.jpg" title="rojo" alt="rojo"></div>
+                <div><img src="images/cielo.jpg" title="Cielo" alt="cielo"></div>
+            </div>
+        </div>
         <section id="content">
             <div id="posts">
                 <article class="post">

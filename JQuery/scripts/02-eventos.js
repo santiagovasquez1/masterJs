@@ -38,6 +38,7 @@ $(function() {
         $(this).css("border-color", "black");
     });
 
+
     //Focus y blur
     var inputName = $("#nombre");
     inputName.on('focus', function() {
