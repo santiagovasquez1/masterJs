@@ -1,0 +1,58 @@
+body {
+    background: url('../images/rojo.jpg');
+    background-attachment: fixed;
+}
+
+#logo {
+    background: #ca3413;
+    color: white;
+}
+
+#menu {
+    background: #333;
+}
+
+#menu li:hover {
+    background: #ca3413;
+}
+
+#menu a {
+    color: white;
+}
+
+.post h2 {
+    color: #333;
+}
+
+.post .date {
+    color: gray;
+}
+
+.button-more {
+    background: #ca3413;
+    color: white;
+}
+
+#sidebar h4 {
+    color: #333;
+}
+
+#sidebar h4 span {
+    background: white;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"] {
+    border: 1px solid #ccc;
+}
+
+form input[type="submit"] {
+    background: #eee;
+    color: #333;
+}
+
+footer {
+    background: rgba(51, 51, 51, 0.70);
+    color: white;
+}

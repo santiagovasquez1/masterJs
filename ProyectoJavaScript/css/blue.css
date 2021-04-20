@@ -1,0 +1,58 @@
+body {
+    background: url('../images/cielo.jpg');
+    background-attachment: fixed;
+}
+
+#logo {
+    background: #1f87c4;
+    color: white;
+}
+
+#menu {
+    background: #333;
+}
+
+#menu li:hover {
+    background: #1f87c4;
+}
+
+#menu a {
+    color: white;
+}
+
+.post h2 {
+    color: #333;
+}
+
+.post .date {
+    color: gray;
+}
+
+.button-more {
+    background: #1f87c4;
+    color: white;
+}
+
+#sidebar h4 {
+    color: #333;
+}
+
+#sidebar h4 span {
+    background: white;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"] {
+    border: 1px solid #ccc;
+}
+
+form input[type="submit"] {
+    background: #eee;
+    color: #333;
+}
+
+footer {
+    background: rgba(51, 51, 51, 0.70);
+    color: white;
+}

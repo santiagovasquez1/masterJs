@@ -6,14 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
+    <link id="theme" rel="stylesheet" href="css/green.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
     <script src="scripts/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
     <script src="scripts/main.js"></script>
+    <!--Pugin de moment js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es-mx.min.js"></script>
     <title>Proyecto Js</title>
 </head>
 
 <body>
+
+    <div id="selectorTheme">
+        <div id="toGreen"></div>
+        <div id="toRed"></div>
+        <div id="toBlue"></div>
+    </div>
+
     <section id="global">
         <header>
             <div id="logo">
@@ -42,14 +53,6 @@
         </div>
         <section id="content">
             <div id="posts">
-                <article class="post">
-                    <h2>Titulo articulo</h2>
-                    <span class="date">Fecha de publicación</span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto quo nam ipsa odio, deleniti quae officia tempora quasi dolorum debitis. Officia dolore adipisci commodi nostrum dolores iste sint unde enim?</p>
-
-                    <a href="#" class="button-more">Leer más</a>
-                </article>
-
             </div>
             <aside id="sidebar">
                 <div id="about">
@@ -77,6 +80,7 @@
 
     <footer>
         Master de JavaScript Santiago Vasquez Gomez &copy;
+        <a href="#" class="subir">Ir arriba</a>
     </footer>
 </body>
 
