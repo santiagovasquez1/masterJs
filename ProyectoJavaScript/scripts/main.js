@@ -2,53 +2,40 @@
 
 $(function() {
 
-    $('.bxslider').bxSlider({
-        mode: 'fade',
-        captions: true,
-        slideWidth: 1200,
-        pager: false
-    });
+    if (window.location.href.indexOf('index') >= 0) {
+        $('.bxslider').bxSlider({
+            mode: 'fade',
+            captions: true,
+            slideWidth: 1200,
+            pager: false
+        });
+    }
 
-    // moment().format('MMM dddd YYYY')
+    if (window.location.href.indexOf('index') >= 0) {
+        var urlService = "https://jsonplaceholder.typicode.com/posts";
+        var divforPosts = $("#posts");
 
-    // var posts = [{
-    //     title: 'Titulo 1',
-    //     date: `Publicado el dia ${moment().date()} de ${moment().format('MMMM')} del ${moment().format('YYYY')}`,
-    //     content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto quo nam ipsa odio, deleniti quae officia tempora quasi dolorum debitis. Officia dolore adipisci commodi nostrum dolores iste sint unde enim?'
-    // }, {
-    //     title: 'Titulo 2',
-    //     date: `Publicado el dia ${moment().date()} de ${moment().format('MMMM')} del ${moment().format('YYYY')}`,
-    //     content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto quo nam ipsa odio, deleniti quae officia tempora quasi dolorum debitis. Officia dolore adipisci commodi nostrum dolores iste sint unde enim?'
-    // }, {
-    //     title: 'Titulo 3',
-    //     date: `Publicado el dia ${moment().date()} de ${moment().format('MMMM')} del ${moment().format('YYYY')}`,
-    //     content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto quo nam ipsa odio, deleniti quae officia tempora quasi dolorum debitis. Officia dolore adipisci commodi nostrum dolores iste sint unde enim?'
-    // }];
-
-    var urlService = "https://jsonplaceholder.typicode.com/posts";
-    var divforPosts = $("#posts");
-
-    $.ajax({
-        type: "GET",
-        url: urlService,
-        data: "data",
-        dataType: "json",
-        success: function(response) {
-            response.forEach(post => {
-                var date = `Publicado el dia ${moment().date()} de ${moment().format('MMMM')} del ${moment().format('YYYY')}`;
-                var plantillaHtmlForPost = `
-                <article class="post">
-                    <h3>${post.title}</h3>
-                    <span class="date">${date}</span>
-                    <p>${post.body}</p>
-                    <a href="#" class="button-more">Leer más</a>
-                </article>
-                `;
-                divforPosts.append(plantillaHtmlForPost);
-            });
-        }
-    });
-
+        $.ajax({
+            type: "GET",
+            url: urlService,
+            data: "data",
+            dataType: "json",
+            success: function(response) {
+                response.forEach(post => {
+                    var date = `Publicado el dia ${moment().date()} de ${moment().format('MMMM')} del ${moment().format('YYYY')}`;
+                    var plantillaHtmlForPost = `
+                    <article class="post">
+                        <h3>${post.title}</h3>
+                        <span class="date">${date}</span>
+                        <p>${post.body}</p>
+                        <a href="#" class="button-more">Leer más</a>
+                    </article>
+                    `;
+                    divforPosts.append(plantillaHtmlForPost);
+                });
+            }
+        });
+    }
 
     //Selector del tema
     var themeSelector = $("#theme");
@@ -98,21 +85,36 @@ $(function() {
         localStorage.setItem("formUser", JSON.stringify(user));
     });
 
-    // localStorage.removeItem("formUser");
+
+    //Acrodeon
+    if (window.location.href.indexOf('about') >= 0) {
+        $("#acordeon").accordion();
+    }
+
+    //Reloj
+    if (window.location.href.indexOf('reloj') >= 0) {
+
+        setInterval(() => {
+            var reloj = moment().format('h:mm:ss a');
+            $("#reloj").html(reloj);
+        }, 1000);
+
+    }
+
+    if (window.location.href.indexOf('contact') >= 0) {
+
+        $("form input[name='bornDate']").datepicker({
+            dateFormat: 'dd-mm-yy'
+        });
+
+        $.validate({
+            lang: 'es',
+            erroMessagePosition: 'top'
+        });
 
 
+    }
 
-    // posts.forEach(post => {
-    //     var plantillaHtmlForPost = `
-    //     <article class="post">
-    //         <h2>${post.title}</h2>
-    //         <span class="date">${post.date}</span>
-    //         <p>${post.content}</p>
-    //         <a href="#" class="button-more">Leer más</a>
-    //     </article>
-    //     `;
-    //     divforPosts.append(plantillaHtmlForPost);
-    // });
 });
 
 function loadUser(user) {

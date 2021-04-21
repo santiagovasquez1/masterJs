@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -7,14 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
     <link id="theme" rel="stylesheet" href="css/green.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <link rel="stylesheet" href="scripts/jquery-ui-1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="scripts/jquery-ui-1.12.1/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="scripts/jquery-ui-1.12.1/jquery-ui.theme.min.css">
     <script src="scripts/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="scripts/jquery-ui-1.12.1/jquery-ui.min.js"></script>
     <script src="scripts/main.js"></script>
     <!--Pugin de moment js-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es-mx.min.js"></script>
-    <script src="scripts/jquery-ui-1.12.1/jquery-ui.min.js"></script>
     <title>Proyecto Js</title>
 </head>
 
@@ -44,16 +43,30 @@
                 </ul>
             </nav>
         </header>
-        <!--Slider-->
-        <div id="slider">
-            <div class="bxslider">
-                <div><img src="images/hojas.jpg" title="Hojas" alt="Hojas"></div>
-                <div><img src="images/rojo.jpg" title="rojo" alt="rojo"></div>
-                <div><img src="images/cielo.jpg" title="Cielo" alt="cielo"></div>
-            </div>
-        </div>
+
         <section id="content">
-            <div id="posts">
+            <div id="box">
+                <h2>Sobre mi</h2>
+                <!-- Carga del acordeon -->
+                <div id="acordeon">
+                    <h3>¿Quienes somos?</h3>
+                    <div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia alias ratione praesentium voluptates quaerat eius aliquam. Fuga odio quibusdam magni commodi mollitia! Incidunt totam veritatis fugiat porro consequatur dicta nihil?</p>
+                    </div>
+                    <h3>Nuestros servicios</h3>
+                    <div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia alias ratione praesentium voluptates quaerat eius aliquam. Fuga odio quibusdam magni commodi mollitia! Incidunt totam veritatis fugiat porro consequatur dicta nihil?</p>
+                    </div>
+                    <h3>Nuestros clientes</h3>
+                    <div>
+                        <ul>
+                            <li>Cliente 1</li>
+                            <li>Cliente 1</li>
+                            <li>Cliente 1</li>
+                        </ul>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia alias ratione praesentium voluptates quaerat eius aliquam. Fuga odio quibusdam magni commodi mollitia! Incidunt totam veritatis fugiat porro consequatur dicta nihil?</p>
+                    </div>
+                </div>
             </div>
             <aside id="sidebar">
                 <div id="about">
@@ -83,6 +96,5 @@
         Master de JavaScript Santiago Vasquez Gomez &copy;
         <a href="#" class="subir">Ir arriba</a>
     </footer>
-</body>
 
 </html>

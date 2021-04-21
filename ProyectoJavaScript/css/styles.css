@@ -132,7 +132,9 @@ body {
 
 form input[type="text"],
 form input[type="password"],
-form input[type="email"] {
+form input[type="email"],
+form input[type="number"],
+select {
     padding: 5px;
     border-radius: 2px;
     width: 80%;
@@ -199,4 +201,41 @@ footer {
     text-decoration: none;
     display: block;
     float: right;
+}
+
+#box {
+    width: 60%;
+    float: left;
+    margin-top: 40px;
+}
+
+#acordeon {
+    margin-top: 20px;
+}
+
+#reloj {
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Helvetica, Arial;
+    color: #333;
+    border: 5px dashed #333;
+    width: 30%;
+    padding: 30px;
+    margin: 0 auto;
+}
+
+#formContact {
+    width: 50%;
+    margin-top: 10px;
+    font-family: Helvetica, Arial;
+}
+
+#formContact label {
+    width: 100%;
+    display: block;
+    margin-top: 5px;
+}
+
+#box {
+    font-family: Helvetica, Arial;
 }
