@@ -1,6 +1,21 @@
 //el fichero se debe llamar igual a la clase
+interface CamisetaBase {
+    setColor(color);
+    getColor();
+}
 
-class Camiseta {
+//Creacion decorador
+//Añade funciones a nuestra clase decorada
+function estampar(logo: string) {
+    return function (target: Function) {
+        target.prototype.estampacion = function (): void {
+            console.log("Camiseta estampada con el logo de " + logo);
+        }
+    };
+}
+
+// @estampar('Gucci')
+class Camiseta implements CamisetaBase {
 
     private color: string;
     public modelo: string;
@@ -8,12 +23,12 @@ class Camiseta {
     public talla: string;
     public precio: number;
 
-    constructor(color:string,modelo:string, marca:string,talla:string,precio:number) {
-        this.color=color;
-        this.modelo=modelo;
-        this.marca=marca;
-        this.talla=talla;
-        this.precio=precio;
+    constructor(color: string, modelo: string, marca: string, talla: string, precio: number) {
+        this.color = color;
+        this.modelo = modelo;
+        this.marca = marca;
+        this.talla = talla;
+        this.precio = precio;
     }
 
     public setColor(color: string): void {
@@ -22,11 +37,29 @@ class Camiseta {
 
     public getColor(): string {
         return this.color;
-    }    
+    }
 }
 
-var camiseta = new Camiseta('rojo','verano','nike','l',15000);
+class Sudadera extends Camiseta {
+    private capucha: boolean;
 
-var playera = new Camiseta('verde','verano','adidas','l',65000);
 
-console.log(camiseta, playera)
+    setCapucha(capucha: boolean) {
+        this.capucha = capucha;
+    }
+
+
+    getCapucha(): boolean {
+        return this.capucha;
+    }
+}
+
+
+var camiseta = new Camiseta('rojo', 'verano', 'nike', 'l', 15000);
+
+var playera = new Camiseta('verde', 'verano', 'adidas', 'l', 65000);
+
+var sudadera = new Sudadera('verde', 'verano', 'adidas', 'l', 65000);
+sudadera.setCapucha(true);
+
+console.log(camiseta, playera, sudadera);
