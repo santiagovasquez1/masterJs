@@ -10,10 +10,12 @@
     "author": "Santiago Vasquez",
     "license": "MIT",
     "dependencies": {
+        "aws-sdk": "^2.894.0",
         "body-parser": "^1.19.0",
         "connect-multiparty": "^2.2.0",
         "express": "^4.17.1",
-        "mongoose": "^5.12.6"
+        "mongoose": "^5.12.6",
+        "uuid": "^8.3.2"
     },
     "devDependencies": {
         "nodemon": "^2.0.7"
