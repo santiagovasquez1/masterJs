@@ -30,6 +30,12 @@ app.get('/', (request, response) => {
     response.status(200).send(plantilla);
 });
 
+app.get('/:name', (request, response) => {
+    var plantilla = `<h1>Pagina de inicio</h1>
+    <p>${request.params.name}</p>`;
+    response.status(200).send(plantilla);
+});
+
 app.post('/test/:id', (request, response) => {
     console.log(request.body.name);
     console.log(request.query.web);
