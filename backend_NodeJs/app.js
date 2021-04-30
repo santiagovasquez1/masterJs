@@ -4,7 +4,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 const { response, request } = require('express');
 
+
+
 var app = express();
+
 
 //cargar archivos de rutas
 
@@ -38,7 +41,7 @@ app.get('/:name', (request, response) => {
 
 app.post('/test/:id', (request, response) => {
     console.log(request.body.name);
-    console.log(request.query.web);
+    // console.log(request.query.web);
     console.log(request.params.id);
     response.status(200).send({
         message: 'Hola mundo desde el backend',
