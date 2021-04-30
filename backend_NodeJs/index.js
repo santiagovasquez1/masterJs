@@ -15,13 +15,17 @@ AWS.config.getCredentials(function(err) {
         var ddb = new AWS.DynamoDB();
         var param = {}
 
-        ddb.listTables({ Limit: 10 }, function(err, data) {
-            if (err) {
-                console.log("Error", err.code);
-            } else {
-                console.log("Table names are ", data.TableNames);
-            }
-        });
+        // ddb.listTables({ Limit: 10 }, function(err, data) {
+        //     if (err) {
+        //         console.log("Error", err.code);
+        //     } else {
+        //         console.log("Table names are ", data.TableNames);
+        //     }
+        // });
+
+        // var Cat = dynamoose.model('Cat', { id: Number, name: String });
+        // var garfield = new Cat({ id: 666, name: 'Garfield' });
+        // garfield.save();
 
         app.listen(port, () => {
             console.log('Servidor corriendo correctamente en url: localhost:3700');
@@ -29,6 +33,5 @@ AWS.config.getCredentials(function(err) {
 
         console.log("Access key:", AWS.config.credentials.accessKeyId);
         console.log("Region: ", AWS.config.region);
-
     }
 });

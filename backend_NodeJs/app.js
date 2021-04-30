@@ -3,14 +3,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 const { response, request } = require('express');
-
-
-
 var app = express();
 
-
 //cargar archivos de rutas
-
+var projectRoutes = require('./routes/projectsRoutes');
 
 //middleware, metodos que se ejecuta antes de la accion de un controlador
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,32 +18,35 @@ app.use(bodyParser.json());
 
 
 //rutas
-app.get('/test', (request, response) => {
-    response.status(200).send({
-        message: 'Hola mundo desde el backend'
-    });
-});
+app.use('/api', projectRoutes);
 
-app.get('/', (request, response) => {
-    var plantilla = `<h1>Pagina de inicio</h1>`
-    response.status(200).send(plantilla);
-});
 
-app.get('/:name', (request, response) => {
-    var plantilla = `<h1>Pagina de inicio</h1>
-    <p>${request.params.name}</p>`;
-    response.status(200).send(plantilla);
-});
+// app.get('/test', (request, response) => {
+//     response.status(200).send({
+//         message: 'Hola mundo desde el backend'
+//     });
+// });
 
-app.post('/test/:id', (request, response) => {
-    console.log(request.body.name);
-    // console.log(request.query.web);
-    console.log(request.params.id);
-    response.status(200).send({
-        message: 'Hola mundo desde el backend',
-        body: request.body
-    });
-});
+// app.get('/', (request, response) => {
+//     var plantilla = `<h1>Pagina de inicio</h1>`
+//     response.status(200).send(plantilla);
+// });
+
+// app.get('/:name', (request, response) => {
+//     var plantilla = `<h1>Pagina de inicio</h1>
+//     <p>${request.params.name}</p>`;
+//     response.status(200).send(plantilla);
+// });
+
+// app.post('/test/:id', (request, response) => {
+//     console.log(request.body.name);
+//     // console.log(request.query.web);
+//     console.log(request.params.id);
+//     response.status(200).send({
+//         message: 'Hola mundo desde el backend',
+//         body: request.body
+//     });
+// });
 
 //exportar modulo
 module.exports = app;
