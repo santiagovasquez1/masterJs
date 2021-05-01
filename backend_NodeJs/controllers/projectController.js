@@ -3,9 +3,10 @@ const Project = require('../models/projectModel');
 const dynamoose = require('dynamoose');
 const tableName = "projects";
 var AWS = require('aws-sdk');
+var fs = require('fs');
 
 AWS.config.update({
-    region: process.env.AWS_DEFAULT_REGION
+    region: 'us-east-1'
 });
 const ddb = new AWS.DynamoDB({ apiVersion: '2012-08-10' });
 
@@ -26,10 +27,10 @@ var ProjectController = {
         var project = new Project()
 
         var params = req.body;
-        project.name = params.name;
+        project.projectName = params.projectName;
         project.description = params.description;
         project.category = params.category;
-        project.year = params.year;
+        project.projectYear = params.projectYear;
 
         project.langs = params.langs;
         project.image = params.image;
@@ -130,12 +131,12 @@ var ProjectController = {
                     S: projectId
                 }
             },
-            UpdateExpression: "set name = :n, description = :d, category = :c, year = :y, lenguajes = :l, image = :i ",
+            UpdateExpression: "set projectName = :n, description = :d, category = :c, projectYear = :y, lenguajes = :l, image = :i ",
             ExpressionAttributeValues: {
-                ":n": { S: update.name },
+                ":n": { S: update.projectName },
                 ":d": { S: update.description },
                 ":c": { S: update.category },
-                ":y": { N: update.year.toString() },
+                ":y": { N: update.projectYear.toString() },
                 ":l": { S: update.langs },
                 ":i": { S: update.image }
             },
@@ -180,24 +181,35 @@ var ProjectController = {
 
         if (req.files) {
             var filePath = req.files.image.path;
-            var fileSplit = filePath.split('\\');
-            var fileName = fileSplit[1];
+            var fileSplit = filePath.split('/');
+            let fileName = fileSplit[2];
+            var fileExt = fileName.split('.')[1];
+            if (fileExt == 'png' || fileExt == 'jpg' || fileExt == 'jpeg' || fileExt == 'gif') {
 
-            var params = {
-                TableName: tableName,
-                Key: {
-                    "id": {
-                        S: projectId
-                    }
-                },
-                UpdateExpression: "set image = :i ",
-                ExpressionAttributeValues: {
-                    ":i": { S: fileName }
-                },
-                ReturnValues: "UPDATED_NEW"
-            };
+                var params = {
+                    TableName: tableName,
+                    Key: {
+                        "id": {
+                            S: projectId
+                        }
+                    },
+                    UpdateExpression: "set image = :i ",
+                    ExpressionAttributeValues: {
+                        ":i": { S: fileName }
+                    },
+                    ReturnValues: "UPDATED_NEW"
+                };
 
-            updateDataBase(params, res);
+                updateDataBase(params, res);
+            } else {
+                fs.unlink(filePath, (err) => {
+                    return res.status(200).send({
+                        message: 'La extension no es valida'
+                    });
+                });
+            }
+
+
         } else {
             return res.status(200).send({
                 message: fileName

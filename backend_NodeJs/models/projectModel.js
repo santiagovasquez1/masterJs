@@ -9,10 +9,10 @@ var projectSchema = new Schema({
         hashKey: true,
         default: uuidv4
     },
-    name: String,
+    projectName: String,
     description: String,
     category: String,
-    year: Number,
+    projectYear: Number,
     lenguajes: String,
     image: String,
 });
