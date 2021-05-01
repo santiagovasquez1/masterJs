@@ -142,22 +142,7 @@ var ProjectController = {
             ReturnValues: "UPDATED_NEW"
         };
 
-        ddb.updateItem(params, (err, projectUpdate) => {
-            if (err) {
-                return res.status(500).send({
-                    message: "Error al actualizar el proyecto",
-                    error: err
-                });
-            }
-            if (!projectUpdate) {
-                return res.status(404).send({
-                    message: "No existe el poyecto para actualizar",
-                });
-            }
-            return res.status(200).send({
-                project: projectUpdate
-            });
-        });
+        updateDataBase(params, res);
     },
 
     deleteProject: function(req, res) {
@@ -187,7 +172,57 @@ var ProjectController = {
                 project: result
             });
         });
+    },
+
+    uploadImage: function(req, res) {
+        var projectId = req.params.id;
+        var fileName = 'Imagen no subida';
+
+        if (req.files) {
+            var filePath = req.files.image.path;
+            var fileSplit = filePath.split('\\');
+            var fileName = fileSplit[1];
+
+            var params = {
+                TableName: tableName,
+                Key: {
+                    "id": {
+                        S: projectId
+                    }
+                },
+                UpdateExpression: "set image = :i ",
+                ExpressionAttributeValues: {
+                    ":i": { S: fileName }
+                },
+                ReturnValues: "UPDATED_NEW"
+            };
+
+            updateDataBase(params, res);
+        } else {
+            return res.status(200).send({
+                message: fileName
+            });
+        }
     }
 }
 
 module.exports = ProjectController;
+
+function updateDataBase(params, res) {
+    ddb.updateItem(params, (err, projectUpdate) => {
+        if (err) {
+            return res.status(500).send({
+                message: "Error al actualizar el proyecto",
+                error: err
+            });
+        }
+        if (!projectUpdate) {
+            return res.status(404).send({
+                message: "No existe el poyecto para actualizar",
+            });
+        }
+        return res.status(200).send({
+            project: projectUpdate
+        });
+    });
+}
