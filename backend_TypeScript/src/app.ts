@@ -1,12 +1,13 @@
 import express = require("express");
 
+const bodyParser = require('body-parser');
+const { response, reques } = require('express');
 const app = express();
-const port: number = 3000;
 
 app.get('/', (req, res) => {
     res.send('The sedulous hyena ate the antelope!');
 });
-app.listen((port: number, err:any) => {
+app.listen((port: number, err: any) => {
     if (err) {
         return console.error(err);
     }
