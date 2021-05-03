@@ -1,16 +1,16 @@
-const { v4: uuidv4, stringify } = require('uuid');
+import { Guid } from "guid-typescript";
 
-export class projectSchema {
+export class projectModels {
 
-    // id: {
-    //     type: String,
-    //     hashKey: true,
-    //     default: uuidv4
-    // };
-    // projectName: String;
-    // description: String;
-    // category: String;
-    // projectYear: Number;
-    // lenguajes: String;
-    // image: String;
+    id: String;
+    projectName: String;
+    description: String;
+    category: String;
+    projectYear: Number;
+    lenguajes: String;
+    image: String;
+
+    constructor() {
+        this.id=Guid.create().toString();
+    }
 }
