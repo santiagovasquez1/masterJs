@@ -10,6 +10,7 @@
 # dependencies
 /node_modules
 /backend_NodeJs/node_modules
+/backend_TypeScript/node_modules
 
 # profiling files
 chrome-profiler-events*.json
