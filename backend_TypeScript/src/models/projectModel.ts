@@ -1,6 +1,6 @@
 import { Guid } from "guid-typescript";
 
-export class projectModels {
+class projectModels {
 
     private id: String;
     projectName: String;
@@ -14,3 +14,5 @@ export class projectModels {
         this.id = Guid.create().toString();
     }
 }
+
+export default projectModels;

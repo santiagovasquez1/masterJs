@@ -1,9 +1,9 @@
-import { ProjectController } from './controllers/projectController';
-import { App } from "./app";
+import App from './app';
+import  ProjectController  from './controllers/projectController';
 import { eventLog, eventLogSingleton } from './eventLog';
 
 const eventLoger: eventLog = eventLogSingleton;
-var port = 4800;
+var port = 3700;
 
 eventLoger.log('Starting the app.');
 const app = new App(

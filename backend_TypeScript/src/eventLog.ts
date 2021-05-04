@@ -5,7 +5,7 @@ export class eventLog {
         this.logs = [];
     }
 
-    get count():number{
+    get count(): number {
         return this.logs.length
     }
 
@@ -15,6 +15,10 @@ export class eventLog {
             { message, timestamp }
         )
         console.log(`${timestamp} - ${message}`)
+    }
+
+    get Lastlog(): object {
+        return this.logs[this.count - 1];
     }
 }
 

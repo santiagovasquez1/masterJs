@@ -1,34 +1,33 @@
-import { projectModels } from "../models/projectModel";
+import projectModels from "../models/projectModel";
 import * as express from 'express';
 import * as Aws from 'aws-sdk';
 import { eventLog, eventLogSingleton } from "../eventLog";
+import { count } from "node:console";
 
-export class ProjectController {
+class ProjectController {
 
-    proectModel: projectModels;
     public path = 'api';
     public router = express.Router();
     public multpart: any;
     public multipartMiddelware;
     private projectControllerLogger: eventLog = eventLogSingleton;
+    private projects: projectModels[] = [];
 
     constructor() {
         this.projectControllerLogger.log('projectController instance constructed');
         this.initalizeRoutes();
         this.multpart = require('connect-multiparty');
-        // this.multipartMiddelware = this.multpart({
-        //     uploadDir: 'uploads'
-        // });
+        this.multipartMiddelware = this.multpart({
+            uploadDir: 'uploads'
+        });
     }
 
     initalizeRoutes() {
-        this.router.get('/home', this.home);
-        // this.router.post('/upLoadImage/:id', this.multipartMiddelware, this.uploadImage, result => {
-        //     console.log(result);
-        // });
-        this.router.post('/upLoadImage/:id', this.uploadImage);
+        this.router.post('/home', this.home.bind(this));
+        // this.router.post('/upLoadImage/:id', this.multipartMiddelware, this.uploadImage.bind(this));
     }
 
+    //Debe ser funcion flecha para acceder a los elementos de la clase
     home(req: express.Request, res: express.Response) {
 
         // let params = {
@@ -51,17 +50,30 @@ export class ProjectController {
         //         project: projects.Items
         //     });
         // });
-        // let project = new projectModels();
-        // let params = <projectModels>req.body;
-        // project.projectName = params.projectName
-        // project.category = params.category;
-        // project.description = params.description;
-        // project.lenguajes = params.lenguajes;
-        // project.image = params.image;
-        this.projectControllerLogger.log("Invocacion del metodo home");
-        return res.status(200).send({
-            logger: this.projectControllerLogger.count
-        });
+
+        let project = new projectModels();
+        let params = req.body;
+        if (params.projectName) {
+            project.projectName = params.projectName
+            project.category = params.category;
+            project.description = params.description;
+            project.projectYear = params.projectYear;
+            project.lenguajes = params.lenguajes;
+            project.image = params.image;
+            this.projects.push(project);
+            this.projectControllerLogger.log('home has been invoked sucessfull');
+            return res.status(200).send({
+                project: this.projects,
+                eventLog:  this.projectControllerLogger.Lastlog,
+                counts:this.projectControllerLogger.count
+            });
+        } else {
+            this.projectControllerLogger.log('El cuerpo de la peticion no puede estar vacio');
+            return res.status(400).send({
+                projectControllerLogger: this.projectControllerLogger.Lastlog,
+                counts:this.projectControllerLogger.count
+            });
+        }
     }
 
     uploadImage(req: express.Request, res: express.Response) {
@@ -72,3 +84,5 @@ export class ProjectController {
     }
 
 }
+
+export default ProjectController;

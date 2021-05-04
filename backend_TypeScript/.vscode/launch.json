@@ -1,47 +1,34 @@
 {
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
     "configurations": [
+        {
+            "name": "Launch via NPM",
+            "request": "launch",
+            "runtimeArgs": [
+                "run-script",
+                "debug"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
         {
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "runtimeExecutable": "nodemon",
-            "restart": true,
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}//src//index.ts",
-            "env": {
-                "debug": "app:*",
-            }
-        },
-
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Program2",
-            "runtimeArgs": ["--nolazy", "-r", "ts-node/register/transpile-only"],
-            "args": [
-                "${workspaceFolder}/src/index.ts"
-            ],
-            "internalConsoleOptions": "openOnSessionStart",
-            "skipFiles": ["<node_internals>/**", "node_modules/**"]
-        },
-
-        {
-            "name": "Example",
-            "type": "node",
-            "request": "launch",
-            "runtimeExecutable": "node",
-            "runtimeArgs": ["--nolazy", "-r", "ts-node/register/transpile-only"],
-      
-            "args": ["src/script.ts", "--example", "hello"],
-            
-            "cwd": "${workspaceRoot}",
-            "internalConsoleOptions": "openOnSessionStart",
-            "skipFiles": ["<node_internals>/**", "node_modules/**"]
-          }
- 
+            "program": "${workspaceFolder}\\src\\index.ts",
+            "preLaunchTask": "tsc: build - tsconfig.json",
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ]
+        }
     ]
 }
