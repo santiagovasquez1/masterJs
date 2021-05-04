@@ -1,6 +1,7 @@
 import { projectModels } from "../models/projectModel";
 import * as express from 'express';
 import * as Aws from 'aws-sdk';
+import { eventLog, eventLogSingleton } from "../eventLog";
 
 export class ProjectController {
 
@@ -9,17 +10,15 @@ export class ProjectController {
     public router = express.Router();
     public multpart: any;
     public multipartMiddelware;
-    dynamoDb: Aws.DynamoDB;
-    private readonly tableName = "projects";
+    private projectControllerLogger: eventLog = eventLogSingleton;
 
-    constructor(dynamoDb: Aws.DynamoDB) {
+    constructor() {
+        this.projectControllerLogger.log('projectController instance constructed');
         this.initalizeRoutes();
         this.multpart = require('connect-multiparty');
-        this.multipartMiddelware = this.multpart({
-            uploadDir: 'uploads'
-        });
-        this.dynamoDb = dynamoDb;
-        
+        // this.multipartMiddelware = this.multpart({
+        //     uploadDir: 'uploads'
+        // });
     }
 
     initalizeRoutes() {
@@ -59,9 +58,9 @@ export class ProjectController {
         // project.description = params.description;
         // project.lenguajes = params.lenguajes;
         // project.image = params.image;
-
+        this.projectControllerLogger.log("Invocacion del metodo home");
         return res.status(200).send({
-            Project: this.dynamoDb,
+            logger: this.projectControllerLogger.count
         });
     }
 
