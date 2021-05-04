@@ -2,15 +2,15 @@ import { Guid } from "guid-typescript";
 
 export class projectModels {
 
-    id: String;
+    private id: String;
     projectName: String;
     description: String;
     category: String;
     projectYear: Number;
-    lenguajes: String;
+    lenguajes: String[];
     image: String;
 
     constructor() {
-        this.id=Guid.create().toString();
+        this.id = Guid.create().toString();
     }
 }
