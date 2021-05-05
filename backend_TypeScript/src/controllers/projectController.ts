@@ -1,14 +1,17 @@
 import projectModels from "../models/projectModel";
-import * as multiparty from "connect-multiparty";
 import * as express from 'express';
 import { eventLog, eventLogSingleton } from "../eventLog";
 import { AwsDynamoDbConnection, AwsDynamoDbConnectionSingleton } from "../awsConnection";
 
+const fs = require('fs');
+const multpart = require('connect-multiparty');
+const multipartMiddelware = multpart({
+    uploadDir: 'uploads'
+});
+
 class ProjectController {
 
     public router = express.Router();
-    public multpart: multiparty;
-    public multipartMiddelware;
     private projectControllerLogger: eventLog = eventLogSingleton;
     private awsDynamoDbConnection: AwsDynamoDbConnection = AwsDynamoDbConnectionSingleton;
     private readonly tableName = "projects";
@@ -16,10 +19,6 @@ class ProjectController {
     constructor() {
         this.projectControllerLogger.log('projectController instance constructed');
         this.initalizeRoutes();
-        this.multpart = require('connect-multiparty');
-        this.multipartMiddelware = this.multpart({
-            uploadDir: 'uploads'
-        });
     }
 
     initalizeRoutes() {
@@ -28,7 +27,7 @@ class ProjectController {
         this.router.post('/saveProject', this.saveProject.bind(this));
         this.router.put('/updateProject', this.uploadProject.bind(this));
         this.router.delete('/deleteProject', this.deleteProject.bind(this));
-        // this.router.post('/upLoadImage/:id', this.multipartMiddelware, this.uploadImage.bind(this));
+        this.router.post('/upLoadImage/:id', multipartMiddelware, this.uploadImage.bind(this));
     }
 
     home(req: express.Request, res: express.Response) {
