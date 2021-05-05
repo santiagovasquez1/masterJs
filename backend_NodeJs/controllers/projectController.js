@@ -218,8 +218,6 @@ var ProjectController = {
     }
 }
 
-module.exports = ProjectController;
-
 function updateDataBase(params, res) {
     ddb.updateItem(params, (err, projectUpdate) => {
         if (err) {
@@ -238,3 +236,5 @@ function updateDataBase(params, res) {
         });
     });
 }
+
+module.exports = ProjectController;

@@ -1,18 +1,15 @@
 import projectModels from "../models/projectModel";
+import * as multiparty from "connect-multiparty";
 import * as express from 'express';
-import * as Aws from 'aws-sdk';
 import { eventLog, eventLogSingleton } from "../eventLog";
-import { count } from "node:console";
 import { AwsDynamoDbConnection, AwsDynamoDbConnectionSingleton } from "../awsConnection";
 
 class ProjectController {
 
-    public path = 'api';
     public router = express.Router();
-    public multpart: any;
+    public multpart: multiparty;
     public multipartMiddelware;
     private projectControllerLogger: eventLog = eventLogSingleton;
-    private projects: projectModels[] = [];
     private awsDynamoDbConnection: AwsDynamoDbConnection = AwsDynamoDbConnectionSingleton;
     private readonly tableName = "projects";
 
@@ -200,11 +197,45 @@ class ProjectController {
         });
     }
 
-    uploadImage(req: express.Request, res: express.Response) {
-        return res.status(200).send({
-            headers: req.headers,
-            message: 'Soy upload',
-        });
+    uploadImage(req, res: express.Response) {
+        let projectId = req.params.id;
+        let fileName = 'Imagen no subida';
+
+        if (req.files) {
+            let filePath = req.files.image.path;
+            let fileSplit = filePath.split('/');
+            fileName = fileSplit[2];
+
+            let fileExt = fileName.split('.')[1];
+            if (fileExt == 'png' || fileExt == 'jpg' || fileExt == 'jpeg' || fileExt == 'gif') {
+
+                let params = {
+                    TableName: this.tableName,
+                    Key: {
+                        "id": {
+                            S: projectId
+                        }
+                    },
+                    UpdateExpression: "set image = :i ",
+                    ExpressionAttributeValues: {
+                        ":i": { S: fileName }
+                    },
+                    ReturnValues: "UPDATED_NEW"
+                };
+
+                this.updateDataBase(params, res);
+            } else {
+                fs.unlink(filePath, (err) => {
+                    return res.status(200).send({
+                        message: 'La extension no es valida'
+                    });
+                });
+            }
+        } else {
+            return res.status(200).send({
+                message: fileName
+            });
+        }
     }
 
     updateDataBase(params, res: express.Response) {
