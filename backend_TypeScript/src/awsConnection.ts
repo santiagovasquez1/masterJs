@@ -1,13 +1,12 @@
 import * as AWS from 'aws-sdk';
+import { eventLog, eventLogSingleton } from './eventLog';
 
 export class AwsDynamoDbConnection {
-
-    private awsApp: AWS.Connect;
     private region: string;
     public awsDynamoDb: AWS.DynamoDB;
+    private eventLoger: eventLog = eventLogSingleton;
 
     constructor() {
-        this.awsApp = new AWS.Connect();
         this.region = 'us-east-1';
         this.checkConnection();
     }
@@ -16,9 +15,11 @@ export class AwsDynamoDbConnection {
 
         AWS.config.getCredentials((err, data) => {
             if (err) {
+                this.eventLoger.log(err.stack);
                 console.log(err.stack);
             }
             else {
+                this.eventLoger.log("Conexion iniciada con aws-sdk");
                 AWS.config.update({ region: this.region });
                 this.initAwsDynamoDb();
             }
