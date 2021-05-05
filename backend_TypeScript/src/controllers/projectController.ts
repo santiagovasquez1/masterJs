@@ -67,12 +67,11 @@ class ProjectController {
         let params = req.body;
         let project = new projectModels();
 
-        project.projectName.S = params.projectName;
-        this.projectControllerLogger.log("Iniciando la carga en BD");
-        project.category.S = params.category;
-        project.description.S = params.description;
-        project.projectYear.N = params.projectYear.toString();
-        project.lenguajes.S = params.lenguajes;
+        project.projectName = { S: params.projectName };
+        project.category = { S: params.category };
+        project.description = { S: params.description };
+        project.projectYear = { N: params.projectYear.toString() };
+        project.lenguajes = { S: params.lenguajes };
 
         params = {
             TableName: "projects",

@@ -25,7 +25,10 @@ class projectModels {
     };
 
     constructor() {
-        this.id.S = Guid.create().toString();
+        var id = Guid.create().toString();
+        this.id = {
+            S:id
+        };
     }
 }
 
