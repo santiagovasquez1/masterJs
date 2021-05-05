@@ -3,6 +3,7 @@ import * as express from 'express';
 import * as Aws from 'aws-sdk';
 import { eventLog, eventLogSingleton } from "../eventLog";
 import { count } from "node:console";
+import { AwsDynamoDbConnection, AwsDynamoDbConnectionSingleton } from "../awsConnection";
 
 class ProjectController {
 
@@ -12,6 +13,8 @@ class ProjectController {
     public multipartMiddelware;
     private projectControllerLogger: eventLog = eventLogSingleton;
     private projects: projectModels[] = [];
+    private awsDynamoDbConnection: AwsDynamoDbConnection = AwsDynamoDbConnectionSingleton;
+
 
     constructor() {
         this.projectControllerLogger.log('projectController instance constructed');
@@ -27,53 +30,31 @@ class ProjectController {
         // this.router.post('/upLoadImage/:id', this.multipartMiddelware, this.uploadImage.bind(this));
     }
 
-    //Debe ser funcion flecha para acceder a los elementos de la clase
     home(req: express.Request, res: express.Response) {
 
-        // let params = {
-        //     TableName: "projects"
-        // };
+        this.projectControllerLogger.log('home has been invoked sucessfull');
+        let params = {
+            TableName: "projects"
+        };
 
-        // this.dynamoDb.scan(params, (err, projects)=>{
-        //     if (err) {
-        //         return res.status(500).send({
-        //             message: "Error al crear projecto",
-        //             error: err
-        //         });
-        //     }
-        //     if (!projects) {
-        //         return res.status(404).send({
-        //             message: "No se ha podido guardar el projecto"
-        //         });
-        //     }
-        //     return res.status(200).send({
-        //         project: projects.Items
-        //     });
-        // });
-
-        let project = new projectModels();
-        let params = req.body;
-        if (params.projectName) {
-            project.projectName = params.projectName
-            project.category = params.category;
-            project.description = params.description;
-            project.projectYear = params.projectYear;
-            project.lenguajes = params.lenguajes;
-            project.image = params.image;
-            this.projects.push(project);
-            this.projectControllerLogger.log('home has been invoked sucessfull');
+        this.awsDynamoDbConnection.awsDynamoDb.scan(params, (err, data) => {
+            if (err) {
+                this.projectControllerLogger.log(err.stack);
+                return res.status(500).send({
+                    message: "Error al crear projecto"
+                });
+            }
+            if (!data) {
+                this.projectControllerLogger.log("No se ha podido guardar el projecto");
+                return res.status(404).send({
+                    message: "No se ha podido guardar el projecto"
+                });
+            }
+            this.projectControllerLogger.log("Datos cargados correctamente");
             return res.status(200).send({
-                project: this.projects,
-                eventLog:  this.projectControllerLogger.Lastlog,
-                counts:this.projectControllerLogger.count
+                project: data.Items
             });
-        } else {
-            this.projectControllerLogger.log('El cuerpo de la peticion no puede estar vacio');
-            return res.status(400).send({
-                projectControllerLogger: this.projectControllerLogger.Lastlog,
-                counts:this.projectControllerLogger.count
-            });
-        }
+        });
     }
 
     uploadImage(req: express.Request, res: express.Response) {
