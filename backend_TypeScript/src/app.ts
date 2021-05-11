@@ -12,6 +12,7 @@ class App {
         this.port = port;
 
         this.appLogger.log('aplication instance constructed');
+        this.initializeCore();
         this.initializeMiddlewares();
         this.initializeControllers(controllers);
     }
@@ -19,6 +20,16 @@ class App {
     private initializeMiddlewares() {
         this.app.use(bodyParser.json());
         this.appLogger.log('Middleware instance constructed');
+    }
+
+    private initializeCore() {
+        this.app.use((req, res, next) => {
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+            res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+            res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+            next();
+        });
     }
 
     private initializeControllers(controllers) {

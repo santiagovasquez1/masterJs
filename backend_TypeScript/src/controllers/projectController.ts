@@ -110,7 +110,7 @@ class ProjectController {
         project.projectName = { S: params.projectName };
         project.category = { S: params.category };
         project.description = { S: params.description };
-        project.projectYear = { N: params.projectYear.toString() };
+        project.projectYear = { N: params.projectYear };
         project.lenguajes = { S: params.lenguajes };
 
         params = {
