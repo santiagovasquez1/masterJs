@@ -25,12 +25,12 @@ class ProjectController {
         this.router.get('/home', this.home.bind(this));
         this.router.get('/get', this.getProjectById.bind(this));
         this.router.post('/saveProject', this.saveProject.bind(this));
-        this.router.put('/updateProject', this.uploadProject.bind(this));
-        this.router.delete('/deleteProject', this.deleteProject.bind(this));
+        this.router.put('/updateProject/:id', this.uploadProject.bind(this));
+        this.router.delete('/deleteProject/:id', this.deleteProject.bind(this));
         this.router.post('/upLoadImage/:id', multipartMiddelware, this.uploadImage.bind(this));
     }
 
-    home(req: express.Request, res: express.Response) {
+    async home(req: express.Request, res: express.Response) {
 
         this.projectControllerLogger.log('home has been invoked sucessfull');
         let params = {
@@ -139,7 +139,7 @@ class ProjectController {
     }
 
     uploadProject(req: express.Request, res: express.Response) {
-
+        this.projectControllerLogger.log("ejecutando uploadProject");
         let projectId = req.params.id;
         let update = req.body;
 
@@ -156,7 +156,7 @@ class ProjectController {
                 ":d": { S: update.description },
                 ":c": { S: update.category },
                 ":y": { N: update.projectYear.toString() },
-                ":l": { S: update.langs },
+                ":l": { S: update.lenguajes },
                 ":i": { S: update.image }
             },
             ReturnValues: "UPDATED_NEW"
@@ -191,7 +191,7 @@ class ProjectController {
                 });
             }
             return res.status(200).send({
-                project: result
+                project: result.Attributes as unknown as projectModels
             });
         });
     }
@@ -240,6 +240,7 @@ class ProjectController {
     updateDataBase(params, res: express.Response) {
         this.awsDynamoDbConnection.awsDynamoDb.updateItem(params, (err, projectUpdate) => {
             if (err) {
+                this.projectControllerLogger.log(err.stack);
                 return res.status(500).send({
                     message: "Error al actualizar el proyecto",
                     error: err
