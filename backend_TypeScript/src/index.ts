@@ -10,8 +10,7 @@ var port = 3700;
 if (awsDynamoDbConnection.awsDynamoDb != undefined || awsDynamoDbConnection.awsDynamoDb != null) {
     eventLoger.log('Starting the app.');
     const app = new App(
-        [
-            
+        [           
             new ProjectController()
         ],
         port,

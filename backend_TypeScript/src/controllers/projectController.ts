@@ -4,6 +4,7 @@ import { eventLog, eventLogSingleton } from "../eventLog";
 import { AwsDynamoDbConnection, AwsDynamoDbConnectionSingleton } from "../awsConnection";
 
 const fs = require('fs');
+const path = require('path');
 const multpart = require('connect-multiparty');
 const multipartMiddelware = multpart({
     uploadDir: 'uploads'
@@ -23,14 +24,15 @@ class ProjectController {
 
     initalizeRoutes() {
         this.router.get('/home', this.home.bind(this));
-        this.router.get('/get', this.getProjectById.bind(this));
+        this.router.get('/get/:id', this.getProjectById.bind(this));
         this.router.post('/saveProject', this.saveProject.bind(this));
         this.router.put('/updateProject/:id', this.uploadProject.bind(this));
         this.router.delete('/deleteProject/:id', this.deleteProject.bind(this));
         this.router.post('/upLoadImage/:id', multipartMiddelware, this.uploadImage.bind(this));
+        this.router.get('/getImage/:image', this.getImageFile.bind(this));
     }
 
-    async home(req: express.Request, res: express.Response) {
+    home(req: express.Request, res: express.Response) {
 
         this.projectControllerLogger.log('home has been invoked sucessfull');
         let params = {
@@ -110,7 +112,7 @@ class ProjectController {
         project.projectName = { S: params.projectName };
         project.category = { S: params.category };
         project.description = { S: params.description };
-        project.projectYear = { N: params.projectYear };
+        project.projectYear = { N: params.projectYear.toString() };
         project.lenguajes = { S: params.lenguajes };
 
         params = {
@@ -177,7 +179,7 @@ class ProjectController {
                 }
             },
         };
-
+        this.projectControllerLogger.log("ejecutando deleteProject");
         this.awsDynamoDbConnection.awsDynamoDb.deleteItem(params, (err, result) => {
             if (err) {
                 return res.status(500).send({
@@ -190,6 +192,7 @@ class ProjectController {
                     message: "No existe el poyecto para eliminar",
                 });
             }
+            this.projectControllerLogger.log("Datos borrados");
             return res.status(200).send({
                 project: result.Attributes as unknown as projectModels
             });
@@ -199,13 +202,13 @@ class ProjectController {
     uploadImage(req, res: express.Response) {
         let projectId = req.params.id;
         let fileName = 'Imagen no subida';
-
+        this.projectControllerLogger.log("ejecutando uploadImage");
         if (req.files) {
             let filePath = req.files.image.path;
-            let fileSplit = filePath.split('/');
-            fileName = fileSplit[2];
+            let fileSplit = filePath.split('\\');
+            fileName = fileSplit[1];
 
-            let fileExt = fileName.split('.')[1];
+            let fileExt = fileName.split('.')[1].toLowerCase();
             if (fileExt == 'png' || fileExt == 'jpg' || fileExt == 'jpeg' || fileExt == 'gif') {
 
                 let params = {
@@ -225,16 +228,33 @@ class ProjectController {
                 this.updateDataBase(params, res);
             } else {
                 fs.unlink(filePath, (err) => {
+                    this.projectControllerLogger.log("error al ejecutar uploadImage");
                     return res.status(200).send({
                         message: 'La extension no es valida'
                     });
                 });
             }
         } else {
+            this.projectControllerLogger.log("error al ejecutar uploadImage");
             return res.status(200).send({
                 message: fileName
             });
         }
+    }
+
+    getImageFile(req: express.Request, res: express.Response) {
+        var file = req.params.image;
+        var path_file = `uploads//${file}`;
+
+        fs.exists(path_file, (exists) => {
+            if (exists) {
+                return res.sendFile(path.resolve(path_file));
+            } else {
+                return res.status(200).send({
+                    message: "No existe la imagen"
+                })
+            }
+        });
     }
 
     updateDataBase(params, res: express.Response) {
@@ -251,11 +271,14 @@ class ProjectController {
                     message: "No existe el poyecto para actualizar",
                 });
             }
+            this.projectControllerLogger.log("Base de datos actualizada");
             return res.status(200).send({
                 project: projectUpdate as unknown as projectModels
             });
         });
     }
+
+
 
 }
 
