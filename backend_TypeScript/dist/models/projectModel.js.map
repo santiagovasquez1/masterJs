@@ -1,0 +1,1 @@
+{"version":3,"file":"projectModel.js","sourceRoot":"","sources":["../../src/models/projectModel.ts"],"names":[],"mappings":";;AAAA,qDAAuC;AAEvC,MAAM,aAAa;IAwBf;QACI,IAAI,EAAE,GAAG,sBAAI,CAAC,MAAM,EAAE,CAAC,QAAQ,EAAE,CAAC;QAClC,IAAI,CAAC,EAAE,GAAG;YACN,CAAC,EAAC,EAAE;SACP,CAAC;IACN,CAAC;CACJ;AAED,kBAAe,aAAa,CAAC"}

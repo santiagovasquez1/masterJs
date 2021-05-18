@@ -1,78 +1,76 @@
-import projectModels from "../models/projectModel";
-import * as express from 'express';
-import { eventLog, eventLogSingleton } from "../eventLog";
-import { AwsDynamoDbConnection, AwsDynamoDbConnectionSingleton } from "../awsConnection";
-
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const projectModel_1 = require("../models/projectModel");
+const express = require("express");
+const eventLog_1 = require("../eventLog");
+const awsConnection_1 = require("../awsConnection");
 const fs = require('fs');
-const path = require('path');
 const multpart = require('connect-multiparty');
 const multipartMiddelware = multpart({
     uploadDir: 'uploads'
 });
-
 class ProjectController {
-
-    public router = express.Router();
-    private projectControllerLogger: eventLog = eventLogSingleton;
-    private awsDynamoDbConnection: AwsDynamoDbConnection = AwsDynamoDbConnectionSingleton;
-    private readonly tableName = "projects";
-
     constructor() {
+        this.router = express.Router();
+        this.projectControllerLogger = eventLog_1.eventLogSingleton;
+        this.awsDynamoDbConnection = awsConnection_1.AwsDynamoDbConnectionSingleton;
+        this.tableName = "projects";
         this.projectControllerLogger.log('projectController instance constructed');
         this.initalizeRoutes();
     }
-
     initalizeRoutes() {
         this.router.get('/home', this.home.bind(this));
-        this.router.get('/get/:id', this.getProjectById.bind(this));
+        this.router.get('/get', this.getProjectById.bind(this));
         this.router.post('/saveProject', this.saveProject.bind(this));
         this.router.put('/updateProject/:id', this.uploadProject.bind(this));
         this.router.delete('/deleteProject/:id', this.deleteProject.bind(this));
         this.router.post('/upLoadImage/:id', multipartMiddelware, this.uploadImage.bind(this));
-        this.router.get('/getImage/:image', this.getImageFile.bind(this));
     }
-
-    home(req: express.Request, res: express.Response) {
-
-        this.projectControllerLogger.log('home has been invoked sucessfull');
-        let params = {
-            TableName: this.tableName
-        };
-
-        this.awsDynamoDbConnection.awsDynamoDb.scan(params, (err, data) => {
-            if (err) {
-                this.projectControllerLogger.log(err.stack);
-                return res.status(500).send({
-                    message: "Error al crear projecto"
+    home(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.projectControllerLogger.log('home has been invoked sucessfull');
+            let params = {
+                TableName: this.tableName
+            };
+            this.awsDynamoDbConnection.awsDynamoDb.scan(params, (err, data) => {
+                if (err) {
+                    this.projectControllerLogger.log(err.stack);
+                    return res.status(500).send({
+                        message: "Error al crear projecto"
+                    });
+                }
+                if (!data) {
+                    this.projectControllerLogger.log("No se ha podido guardar el projecto");
+                    return res.status(404).send({
+                        message: "No se ha podido guardar el projecto"
+                    });
+                }
+                this.projectControllerLogger.log("Datos cargados correctamente");
+                return res.status(200).send({
+                    projects: data.Items.map(item => {
+                        var project = item;
+                        return project;
+                    })
                 });
-            }
-            if (!data) {
-                this.projectControllerLogger.log("No se ha podido guardar el projecto");
-                return res.status(404).send({
-                    message: "No se ha podido guardar el projecto"
-                });
-            }
-            this.projectControllerLogger.log("Datos cargados correctamente");
-
-            return res.status(200).send({
-                projects: data.Items.map(item => {
-                    var project = item as unknown as projectModels
-                    return project;
-                })
             });
         });
     }
-
-    getProjectById(req: express.Request, res: express.Response) {
+    getProjectById(req, res) {
         let projectId = req.params.id;
-
         if (projectId == null || projectId == undefined) {
             return res.status(500).send({
                 message: "Error al cargar projecto",
                 err: "projectId no puede ser nulo"
             });
         }
-
         let params = {
             FilterExpression: "id = :i",
             ExpressionAttributeValues: {
@@ -80,7 +78,6 @@ class ProjectController {
             },
             TableName: this.tableName
         };
-
         this.projectControllerLogger.log("Ejecutando getProjectById");
         this.awsDynamoDbConnection.awsDynamoDb.scan(params, (err, projectResult) => {
             if (err) {
@@ -96,29 +93,24 @@ class ProjectController {
                     message: "No se ha obtenido ningun objeto"
                 });
             }
-
             this.projectControllerLogger.log("Datos cargados correctamente");
             return res.status(200).send({
-                project: projectResult.Items[0] as unknown as projectModels
+                project: projectResult.Items[0]
             });
         });
     }
-
-    saveProject(req: express.Request, res: express.Response) {
-
+    saveProject(req, res) {
         let params = req.body;
-        let project = new projectModels();
-
+        let project = new projectModel_1.default();
         project.projectName = { S: params.projectName };
         project.category = { S: params.category };
         project.description = { S: params.description };
-        project.projectYear = { N: params.projectYear.toString() };
+        project.projectYear = { N: params.projectYear };
         project.lenguajes = { S: params.lenguajes };
-
         params = {
             TableName: "projects",
             Item: project
-        }
+        };
         this.projectControllerLogger.log("Ejecutando  saveProject");
         this.awsDynamoDbConnection.awsDynamoDb.putItem(params, (err, data) => {
             if (err) {
@@ -139,12 +131,10 @@ class ProjectController {
             });
         });
     }
-
-    uploadProject(req: express.Request, res: express.Response) {
+    uploadProject(req, res) {
         this.projectControllerLogger.log("ejecutando uploadProject");
         let projectId = req.params.id;
         let update = req.body;
-
         let params = {
             TableName: this.tableName,
             Key: {
@@ -163,14 +153,10 @@ class ProjectController {
             },
             ReturnValues: "UPDATED_NEW"
         };
-
         this.updateDataBase(params, res);
     }
-
-    deleteProject(req: express.Request, res: express.Response) {
-
+    deleteProject(req, res) {
         let projectId = req.params.id;
-
         let params = {
             TableName: this.tableName,
             Key: {
@@ -179,7 +165,6 @@ class ProjectController {
                 }
             },
         };
-        this.projectControllerLogger.log("ejecutando deleteProject");
         this.awsDynamoDbConnection.awsDynamoDb.deleteItem(params, (err, result) => {
             if (err) {
                 return res.status(500).send({
@@ -192,26 +177,20 @@ class ProjectController {
                     message: "No existe el poyecto para eliminar",
                 });
             }
-            this.projectControllerLogger.log("Datos borrados");
             return res.status(200).send({
-                project: result.Attributes as unknown as projectModels
+                project: result.Attributes
             });
         });
     }
-
-    uploadImage(req, res: express.Response) {
+    uploadImage(req, res) {
         let projectId = req.params.id;
         let fileName = 'Imagen no subida';
-        this.projectControllerLogger.log("ejecutando uploadImage");
         if (req.files) {
             let filePath = req.files.image.path;
-            console.log(filePath);
-            let fileSplit = filePath.split("/");
-            fileName = fileSplit[1];
-
-            let fileExt = fileName.split('.')[1].toLowerCase();
+            let fileSplit = filePath.split('/');
+            fileName = fileSplit[2];
+            let fileExt = fileName.split('.')[1];
             if (fileExt == 'png' || fileExt == 'jpg' || fileExt == 'jpeg' || fileExt == 'gif') {
-
                 let params = {
                     TableName: this.tableName,
                     Key: {
@@ -225,40 +204,23 @@ class ProjectController {
                     },
                     ReturnValues: "UPDATED_NEW"
                 };
-
                 this.updateDataBase(params, res);
-            } else {
+            }
+            else {
                 fs.unlink(filePath, (err) => {
-                    this.projectControllerLogger.log("error al ejecutar uploadImage");
                     return res.status(200).send({
                         message: 'La extension no es valida'
                     });
                 });
             }
-        } else {
-            this.projectControllerLogger.log("error al ejecutar uploadImage");
+        }
+        else {
             return res.status(200).send({
                 message: fileName
             });
         }
     }
-
-    getImageFile(req: express.Request, res: express.Response) {
-        var file = req.params.image;
-        var path_file = `uploads//${file}`;
-
-        fs.exists(path_file, (exists) => {
-            if (exists) {
-                return res.sendFile(path.resolve(path_file));
-            } else {
-                return res.status(200).send({
-                    message: "No existe la imagen"
-                })
-            }
-        });
-    }
-
-    updateDataBase(params, res: express.Response) {
+    updateDataBase(params, res) {
         this.awsDynamoDbConnection.awsDynamoDb.updateItem(params, (err, projectUpdate) => {
             if (err) {
                 this.projectControllerLogger.log(err.stack);
@@ -272,15 +234,11 @@ class ProjectController {
                     message: "No existe el poyecto para actualizar",
                 });
             }
-            this.projectControllerLogger.log("Base de datos actualizada");
             return res.status(200).send({
-                project: projectUpdate as unknown as projectModels
+                project: projectUpdate
             });
         });
     }
-
-
-
 }
-
-export default ProjectController;
+exports.default = ProjectController;
+//# sourceMappingURL=projectController.js.map
