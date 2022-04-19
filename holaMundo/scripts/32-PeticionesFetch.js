@@ -25,8 +25,13 @@ window.addEventListener('load', function() {
         }).then(singleUser => {
             return singleUser.json();
         }).then(singleUser => {
-            console.log(singleUser);
             mostrarSingleUser(singleUser, divSingleUser);
+            return getInfo();
+        }).then(data => {
+            console.log(data);
+        }).catch(error => {
+            alert(error);
+            console.log(error);
         });
 });
 
@@ -40,6 +45,27 @@ function getUser(url, index) {
     return fetch(urlUser);
 }
 
+//Creacion de una promesa, se suelen utilizar para el envio de ajax, o la lectura de archivos
+function getInfo() {
+
+    var profesor = {
+        nombre: "Victor",
+        apellidos: "Robles",
+        url: "https//victorroblesweb.es"
+    }
+
+    return new Promise((resolve, reject) => {
+        setTimeout(function() {
+            var profesorString = JSON.stringify(profesor);
+            if (typeof profesorString != 'string') {
+                return reject('error');
+            } else {
+                return resolve(profesorString);
+            }
+        }, 3000);
+    });
+}
+
 function listadoUsuarios(users, ul, divfetchPeticion) {
     users.map(user => {
         let li = document.createElement("li");
@@ -48,12 +74,18 @@ function listadoUsuarios(users, ul, divfetchPeticion) {
         nameUser.innerHTML = user.name;
         li.append(nameUser);
 
+        li.addEventListener('mouseover', function() {
+            li.style.background = "#ccc";
+        });
+
+        li.addEventListener('mouseout', function() {
+            li.style.background = "white";
+        })
+
         let ulInfo = document.createElement("ul");
 
         ulInfo.innerHTML = `<li>User Name: ${user.username}</li>
                 <li>User email: ${user.email}</li>`;
-
-
         ul.append(li);
         ul.append(ulInfo);
     });

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <link id="theme" rel="stylesheet" href="css/green.css">
+    <link rel="stylesheet" href="scripts/jquery-ui-1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="scripts/jquery-ui-1.12.1/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="scripts/jquery-ui-1.12.1/jquery-ui.theme.min.css">
+    <script src="scripts/jquery-3.6.0.min.js"></script>
+    <script src="scripts/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="scripts/main.js"></script>
+    <!--Pugin de moment js-->
+    <title>Proyecto Js</title>
+</head>
+
+<body>
+
+    <div id="selectorTheme">
+        <div id="toGreen"></div>
+        <div id="toRed"></div>
+        <div id="toBlue"></div>
+    </div>
+
+    <section id="global">
+        <header>
+            <div id="logo">
+                <h1>Proyecto JS</h1>
+            </div>
+            <div class="buscar">
+                <input type="text" name="buscador" id="buscador" placeholder="¿Que quieres buscar?">
+            </div>
+            <div class="clearfix"></div>
+            <nav id="menu">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="reloj.html">Reloj</a></li>
+                    <li><a href="about.html">Sobre mi</a></li>
+                    <li><a href="contact.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section id="content">
+            <div id="box">
+                <h2>Sobre mi</h2>
+                <!-- Carga del acordeon -->
+                <div id="acordeon">
+                    <h3>¿Quienes somos?</h3>
+                    <div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia alias ratione praesentium voluptates quaerat eius aliquam. Fuga odio quibusdam magni commodi mollitia! Incidunt totam veritatis fugiat porro consequatur dicta nihil?</p>
+                    </div>
+                    <h3>Nuestros servicios</h3>
+                    <div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia alias ratione praesentium voluptates quaerat eius aliquam. Fuga odio quibusdam magni commodi mollitia! Incidunt totam veritatis fugiat porro consequatur dicta nihil?</p>
+                    </div>
+                    <h3>Nuestros clientes</h3>
+                    <div>
+                        <ul>
+                            <li>Cliente 1</li>
+                            <li>Cliente 1</li>
+                            <li>Cliente 1</li>
+                        </ul>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia alias ratione praesentium voluptates quaerat eius aliquam. Fuga odio quibusdam magni commodi mollitia! Incidunt totam veritatis fugiat porro consequatur dicta nihil?</p>
+                    </div>
+                </div>
+            </div>
+            <aside id="sidebar">
+                <div id="about">
+                    <h4><span>¿Quien Soy?</span></h4>
+                    <img src="images/caracol.jpg" alt="caracol">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde iure in fuga pariatur nobis totam eaque quos voluptatem dignissimos repudiandae, cupiditate ad, ipsam nesciunt id ab error beatae repellendus mollitia!</p>
+                </div>
+
+                <div id="login">
+                    <h4><span>Identificate</span></h4>
+                    <form action="">
+                        <label for="name">Nombre</label>
+                        <input type="text" name="name" id="name">
+                        <label for="email">Correo</label>
+                        <input type="text" name="email" id="email">
+                        <label for="password">Correo</label>
+                        <input type="password" name="password" id="password">
+                        <input type="submit" value="Entrar">
+                    </form>
+                </div>
+            </aside>
+            <div class="clearfix"></div>
+        </section>
+    </section>
+
+    <footer>
+        Master de JavaScript Santiago Vasquez Gomez &copy;
+        <a href="#" class="subir">Ir arriba</a>
+    </footer>
+
+</html>

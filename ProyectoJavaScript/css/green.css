@@ -1,0 +1,58 @@
+body {
+    background: url('../images/hojas.jpg');
+    background-attachment: fixed;
+}
+
+#logo {
+    background: #235e3d;
+    color: white;
+}
+
+#menu {
+    background: #333;
+}
+
+#menu li:hover {
+    background: #235e3d;
+}
+
+#menu a {
+    color: white;
+}
+
+.post h2 {
+    color: #333;
+}
+
+.post .date {
+    color: gray;
+}
+
+.button-more {
+    background: #235e3d;
+    color: white;
+}
+
+#sidebar h4 {
+    color: #333;
+}
+
+#sidebar h4 span {
+    background: white;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"] {
+    border: 1px solid #ccc;
+}
+
+form input[type="submit"] {
+    background: #eee;
+    color: #333;
+}
+
+footer {
+    background: rgba(51, 51, 51, 0.70);
+    color: white;
+}

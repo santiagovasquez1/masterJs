@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peticiones ajax</title>
+    <script src="scripts/jquery-3.6.0.min.js"></script>
+    <script src="scripts/05-PeticionesAjax.js"></script>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+    <h1>Peticiones ajax con Jquery</h1>
+
+    <form action="https://reqres.in/api/users" method="POST" id="formUser">
+
+        <p>
+            <label for="name">Nombre del usuario</label>
+            <input type="text" name="name" id="userName" placeholder="Ingresa el nombre del usuario">
+        </p>
+        <p>
+            <label for="job">Trabajao del usuario</label>
+            <input type="text" name="job" id="userJob" placeholder="Ingresa el trabajo del usuario">
+        </p>
+
+        <input type="submit" value="Registrar">
+
+    </form>
+
+    <div id="caja">
+
+    </div>
+</body>
+
+</html>

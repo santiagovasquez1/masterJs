@@ -1,0 +1,112 @@
+.zebra {
+    border: 2px dashed #ccc;
+    padding: 1px;
+}
+
+.overDiv {
+    background: #ccc;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.grande {
+    font-size: 30px;
+}
+
+.margenSup {
+    display: block;
+    margin-top: 45px;
+}
+
+.resaltado {
+    border-bottom: 2px solid brown;
+}
+
+#caja {
+    padding: 5px;
+    width: 250px;
+    height: 300px;
+    border: 2px solid black;
+    background: lemonchiffon;
+    text-align: center;
+    font-size: 19px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 15px;
+    overflow: scroll;
+}
+
+#Sigueme {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    display: block;
+    background: #1bd87a;
+    opacity: 0.3;
+    border-radius: 25px;
+}
+
+input {
+    padding: 10px;
+    width: 300px;
+    font-size: 20px;
+}
+
+input:focus {
+    border: 2px solid green;
+}
+
+#datos {
+    border: 4px dashed #ccc;
+    padding: 10px;
+    width: 250px;
+    height: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: none;
+}
+
+.element {
+    width: 300px;
+    height: 300px;
+    border: 1px solid black;
+    background: lightblue;
+    margin: 10px;
+    float: left;
+    padding: 5px;
+}
+
+.lista-seleccionable li {
+    width: 80%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    list-style: none;
+    cursor: pointer;
+}
+
+.ui-selecting {
+    border: 1px solid black;
+    background: gray;
+}
+
+.ui-selected {
+    border: 1px solid black;
+    background: #ccc;
+}
+
+#elemento-movido {
+    width: 100px;
+    height: 100px;
+    border: 1px solid red;
+}
+
+#area {
+    width: 300px;
+    height: 300px;
+    border: 1px solid green;
+}
+
+.element {
+    background: lightcoral;
+    float: none;
+    display: none;
+}
