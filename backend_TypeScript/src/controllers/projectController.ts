@@ -2,9 +2,9 @@ import projectModels from "../models/projectModel";
 import * as express from 'express';
 import { eventLog, eventLogSingleton } from "../eventLog";
 import { AwsDynamoDbConnection, AwsDynamoDbConnectionSingleton } from "../awsConnection";
+import * as fs from 'fs';
+import * as  path from 'path';
 
-const fs = require('fs');
-const path = require('path');
 const multpart = require('connect-multiparty');
 const multipartMiddelware = multpart({
     uploadDir: 'uploads'
@@ -203,9 +203,10 @@ class ProjectController {
         let projectId = req.params.id;
         let fileName = 'Imagen no subida';
         this.projectControllerLogger.log("ejecutando uploadImage");
+
         if (req.files) {
             let filePath = req.files.image.path;
-            console.log(filePath);
+
             let fileSplit = filePath.split("/");
             fileName = fileSplit[1];
 
